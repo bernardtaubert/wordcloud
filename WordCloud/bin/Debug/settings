@@ -1,0 +1,7 @@
+MAXSIZE = 42000		# Initial word size
+MINSIZE = 500		# Minimum word size
+APPROXWIDTH = 9.2	# Factor for approximating the width of a word
+APPROXHEIGHT = 20	# Factor for approximating the height of a word
+ACCURACY = 1		# Accuracy of the placement algorithm 
+				0 = faster, but might cause overlapping
+				1 = slower, but all Pixels are validated
