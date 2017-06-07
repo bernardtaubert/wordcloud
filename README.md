@@ -10,7 +10,7 @@ Run WordCloud.exe and drag & drop a text, file or folder you want to search.
 - Enter<pre>Activate Whitelist</pre>
 - Shift + Enter<pre>Activate Blacklist</pre>
 
-Optionally, the following files can be used for initialization.
+The following files can be used for initialization.
 
 + settings
 + blacklist
