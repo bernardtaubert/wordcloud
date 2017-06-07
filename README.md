@@ -1,5 +1,6 @@
 # wordcloud
 A wordcloud generator for GTK 2+
+<img src="Example/screenshot.png" width="400"/>
 
 ## How to Use
 Run WordCloud.exe and drag & drop a text, file or folder you want to search.
@@ -14,8 +15,6 @@ Optionally, the following files can be used for initialization.
 + blacklist
 + whitelist and
 + input
-
-<img src="Example/screenshot.png" width="600"/>
 
 ## Compiling
 The application is compiled with
