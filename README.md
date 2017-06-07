@@ -1,5 +1,6 @@
 # wordcloud
 A wordcloud generator for GTK 2+
+
 <img src="Example/screenshot.png" width="400"/>
 
 ## How to Use
