@@ -16,6 +16,7 @@ namespace WordCloud
 			private static double APPROXWIDTH = 9.2;
 			private static double APPROXHEIGHT = 20;
 			private static int ACCURACY = 1;
+			private static int MINWORDLENGTH = 3;		
 		
 			private uint numOfKeywords = 0;
 			private uint numOfRemovedKeywords = 0;
@@ -134,12 +135,13 @@ namespace WordCloud
 					fileDisplayed = 0;
 					foreach (FileInfo f in fileList) {
 						fileInProgress++;
-						progressKnown = true;
+						if (!progressKnown && fileList.Count > 1)
+							progressKnown = true;
 						if (f.Length == 0)
 							continue;
-						currentLength += (ulong)f.Length;
 						StreamReader fileStream = new StreamReader ( f.OpenRead () );
 						ParseInputStream (fileStream);
+						currentLength += (ulong)f.Length;
 						fileStream.Close ();
 					}
 				} else { // parse as String data
@@ -575,6 +577,17 @@ namespace WordCloud
 						} catch (Exception e) {
 							Console.WriteLine ("Error while parsing the settings file.\n" +e.StackTrace);
 						}
+					} else if (line.StartsWith("MINWORDLENGTH")) {
+						start = line.IndexOf ("=");
+						end   = line.IndexOf ("#");
+						try {
+							if (start >= 0 && end > 0)
+								MINWORDLENGTH = int.Parse (line.Substring (start + 1, end - start - 1));
+							else if (start >= 0)
+								MINWORDLENGTH = int.Parse (line.Substring (start + 1, line.Length - start - 1));
+						} catch (Exception e) {
+							Console.WriteLine ("Error while parsing the settings file.\n" +e.StackTrace);
+						}
 					}				
 				}
 				fileStream.Close ();
@@ -597,7 +610,7 @@ namespace WordCloud
 						tempWord += tempChar;
 					}
 					else {
-						if (!tempWord.Trim ().Equals("")) {
+						if (tempWord.Length >= MINWORDLENGTH) {
 							if (!IsNumeric (tempWord) && !blackList.Contains (tempWord)) { // if it is not a numeric value and not inside the blacklist
 								blackList.Add (tempWord);                                  // then add the word
 							}
@@ -625,7 +638,7 @@ namespace WordCloud
 						tempWord += tempChar;
 					}
 					else {
-						if (!tempWord.Trim ().Equals("")) {
+						if (tempWord.Length >= MINWORDLENGTH) {
 							if (!IsNumeric (tempWord) && !blackList.Contains (tempWord)) { // if it is not a numeric value and not blacklisted and
 								if (!whiteList.Contains (tempWord)) {                      // if not already inside the whitelist
 									wordDictionary.Add (tempWord, 1);                      // then add the word
@@ -670,7 +683,7 @@ namespace WordCloud
 			string[] words = entry.Text.Split(' ');
 			foreach (string text in words) {
 				string tempText = text.ToLower ();
-				if (text != "") {
+				if (tempText.Length >= MINWORDLENGTH) {
 					foreach (string s in whiteList) {
 						if (s.Equals (tempText)) {
 							return; // exit, if the KeyWord is already inside the List
@@ -720,7 +733,7 @@ namespace WordCloud
 			string[] words = entry.Text.Split(' ');
 			foreach (string text in words) {
 				string tempText = text.ToLower ();
-				if (text != "") {
+				if (tempText.Length >= MINWORDLENGTH) {
 					foreach (string s in whiteList) {
 						if (s.Equals (tempText)) {
 							return; // exit, if the KeyWord is already inside the List
@@ -873,7 +886,7 @@ namespace WordCloud
 					tempWord += tempChar;
 				}
 				else {
-					if (!tempWord.Trim ().Equals("")) {
+					if (tempWord.Length >= MINWORDLENGTH) {
 						if (!IsNumeric (tempWord) && !tempBlackList.Contains (tempWord)) {       // if it is not a numeric value and not blacklisted and
 							if (tempWhiteList.Count == 0 || tempWhiteList.Contains (tempWord)) { // if no words are whitelisted at all or it at least this word is whitelisted
 								if (!wordDictionary.ContainsKey (tempWord))                      // and if the word is not already inside the dictionary
