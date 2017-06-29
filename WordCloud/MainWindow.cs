@@ -217,7 +217,7 @@ namespace WordCloud
 				for (int i = 1; i < wordArray.Length; i++) { // then iterate over the remaining words and place new labels sequentially		
 					cLabel l;
 					int x = 0, y = 0;
-					int closestL, closestC, closestP = 0; // closest label, corner and distance
+					int closestL = 0, closestC = 0, closestP = 0; // closest label, corner and distance
 					double closestD = -1;                 // closest distance
 					double curD;
 					KeyValuePair<string, uint> kvp = wordArray[i];

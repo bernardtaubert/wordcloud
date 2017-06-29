@@ -20,7 +20,7 @@ The following files can be used for initialization.
 ## Compiling
 The application is compiled with
 
-* MonoDevelop 2.8.6.3
+* MonoDevelop 5.1
 
 ## Licensing
 [MIT](https://github.com/bernardtaubert/wordcloud/blob/master/LICENSE)
